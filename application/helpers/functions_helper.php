@@ -12,6 +12,16 @@ class Functions
 		$this->CI=& get_instance();
 	}
 
+	public function check_if_page_actually_refered_from($url)
+	{
+		$this->CI->load->library('user_agent');
+		$referer=$this->CI->agent->referrer();
+		if($referer == NULL || $referer != $url)
+		{
+			exit("No direct script allowed");
+		}
+	}
+
 	public function check_existing_session()
 	{
 		$sessionId=$this->get_session_id();
