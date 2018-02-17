@@ -1,6 +1,6 @@
 body
 {
-	background: #eeeeee;
+	background: #e0dce4;
 }
 .form-holder
 {
@@ -16,4 +16,19 @@ body
 label
 {
 	font-weight: bold;
+}
+.center-content
+{
+	position: relative;
+	left: 50%;
+	transform: translate(-50%);
+	-moz-transform: translate(-50%);
+	-webkit-transform: translate(-50%);
+	-ms-transform: translate(-50%);
+	-o-transform: translate(-50%);
+}
+
+.notification-holder
+{
+	padding:3% 2%;
 }

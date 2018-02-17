@@ -8,21 +8,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<br>	
 		<div>
 			<form ng-submit="submitForm()" method="post">
-			  <div class="form-group">
+			  <div class="">
 			    <label for="email">Email address:</label>
-			    <input type="email" class="form-control" id="email" ng-model="data.email">
+			    <input type="email" class="validate" id="email" ng-model="data.email">
 			  </div>
-			  <div class="form-group">
+			  <div class="">
 			    <label for="pwd">Password:</label>
-			    <input type="password" class="form-control" id="pwd" ng-model="data.password">
+			    <input type="password" class="validate" id="pwd" ng-model="data.password">
 			  </div>
-			  <div class="form-check">
-			    <label class="form-check-label">
-			      <input class="form-check-input" type="checkbox"> Remember me
-			    </label>
+			  <div class="">
+					<input type="checkbox" id="myCheckbox" class="filled-in" />
+					<label for="myCheckbox">Remember Me</label>
 			  </div>
-			  <div class="text-center">
-			  	<button type="submit" class="btn btn-outline-primary">Submit</button>
+				<br>
+			  <div class="center-content">
+			  	<button type="submit" class="btn amber lighten-2 black-text">Submit</button>
 			  </div>
 			</form>
 		</div>

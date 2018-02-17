@@ -22,7 +22,37 @@ class Register extends CI_Controller
 	public function register_new_team()
 	{
 		$this->functions->check_if_page_actually_refered_from(base_url().'register');
-		echo "working";
+		$this->output->set_content_type('application/json');
+		$this->load->library('form_validation');
+		$this->form_validations();
+	}
+
+	private function form_validations()
+	{
+		$this->form_validation->set_rules('fullname','Full Name','required|min_length[4]|max_length[20]');
+		$this->form_validation->set_rules('email','Email','required|min_length[4]|max_length[20]|valid_email');
+		$this->form_validation->set_rules('teamname','Team Name','required|min_length[4]|max_length[20]');
+		$this->form_validation->set_rules('password','Team Name','required|min_length[4]|max_length[20]');
+		$this->form_validation->set_rules('confirm_password','Team Name','required|min_length[4]|max_length[20]|matches[password]');
+		if($this->form_validation->run()== FALSE)
+		{
+			$this->display_error_message_as_form_is_not_validated();
+		}
+		else
+		{
+			$this->proceed_to_add_data_to_database();
+		}
+
+	}
+
+	private function display_error_message_as_form_is_not_validated()
+	{
+		echo json_encode(array("error",validation_errors('<span>','</span>')));
+	}
+
+	private function proceed_to_add_data_to_database()
+	{
+		echo json_encode(array("1"));
 	}
 }
 ?>

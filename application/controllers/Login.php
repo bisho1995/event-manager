@@ -8,8 +8,8 @@ class Login extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$functions=new Functions();
-		$functions->check_if_a_previous_session_exists();
+		$this->functions=new Functions();
+		$this->functions->check_if_a_previous_session_exists();
 
 	}
 
@@ -18,15 +18,16 @@ class Login extends CI_Controller {
 		$data["title"]="Login";
 		$data["css"]="login.css";
 		$data["js"]="login.js";
-		$this->load->view('login/template/head.php',$data);
+		$this->load->view('template/head.php',$data);
 		$this->load->view('login/index.php');
-		$this->load->view('login/template/end.php',$data);
+		$this->load->view('template/end.php',$data);
 	}
 
 
 	public function verify_login()
 	{
-		$this->check_if_the_page_is_actually_refered_from_login();
+		$this->functions
+				->check_if_page_actually_refered_from(base_url().'login');
 
 		$this->output->set_header('Content-type: application/json');
 
@@ -76,20 +77,10 @@ class Login extends CI_Controller {
 	}//end of load_helpers_of_verify_login
 
 
-	private function check_if_the_page_is_actually_refered_from_login()
-	{
-		$referer=$this->get_referer();
-		if($referer == NULL || $referer!=$this->get_login_page_url())
-		{
-			exit('No direct script access allowed');
-		}
-	}
+	
 
 
-	private function get_login_page_url()
-	{
-		return base_url().'login';
-	}
+	
 
 
 	private function get_referer()

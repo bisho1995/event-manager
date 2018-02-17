@@ -28,7 +28,3 @@ function gotDataAfterSendingToServer(data)
 		redirect(data.success.url);
 	}
 }
-function redirect(href)
-{
-	window.location.href=href;
-}
