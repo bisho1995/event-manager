@@ -32,6 +32,7 @@ function sendDataToServer($scope)
 {
     let url=location.href;
     let data=getDataJsonObject($scope);
+    displaySpinner();
     $.post(url+'/register_new_team',data,gotDataAfterSendingToServer);
 }
 
@@ -50,6 +51,7 @@ function getDataJsonObject($scope)
 function gotDataAfterSendingToServer(data)
 {
     console.log(data);
+    hideSpinner();
 }
 
 function itemsValidation($scope)
