@@ -31,11 +31,11 @@ class Register extends CI_Controller
 	private function form_validations()
 	{
 		$this->form_validation->set_rules('fullname','Full Name','required|min_length[4]|max_length[20]');
-		$this->form_validation->set_rules('email','Email','required|min_length[4]|max_length[50]|valid_email|is_unique[teams.email]');
+		$this->form_validation->set_rules('email','Email','required|min_length[4]|max_length[50]|valid_email');
 		$this->form_validation->set_rules('teamname','Team Name','required|min_length[4]|max_length[20]');
 		$this->form_validation->set_rules('password','Team Name','required|min_length[4]|max_length[20]');
 		$this->form_validation->set_rules('confirm_password','Team Name','required|min_length[4]|max_length[20]|matches[password]');
-		if($this->form_validation->run()== FALSE)
+		if($this->form_validation->run()== FALSE || $this->my_validation()==false)
 		{
 			$this->send_error_status_to_sender(validation_errors('',''));
 		}
@@ -44,6 +44,17 @@ class Register extends CI_Controller
 			$this->proceed_to_add_data_to_database();
 		}
 
+	}
+
+	private function my_validation()
+	{
+		$this->db->query("SELECT email FROM teams WHERE email LIKE ".
+			$this->db->escape(
+				$this->input->post('email')
+			));
+		if($this->db->affected_rows()!=0)
+			return false;
+		else return true;
 	}
 
 	private function send_error_status_to_sender($errors='')
@@ -73,10 +84,14 @@ class Register extends CI_Controller
 	private function add_team_data_to_database()
 	{
 		$data=array(
-			'full_name' => $this->input->post('fullname'),
-			'email' => $this->input->post('email'),
-			'team_name'=> $this->input->post('teamname'),
-			'password' => $this->input->post('password')
+			'full_name' => 
+				($this->input->post('fullname')),
+			'email' => 
+				($this->input->post('email')),
+			'team_name'=> 
+				($this->input->post('teamname')),
+			'password' => 
+				($this->input->post('password'))
 		);
 		$this->db->insert('teams',$data);
 	}
