@@ -34,5 +34,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </ul>
     </div>
   </nav>
-   
+  <div class="preloader-container" style="position:fixed;width:100%;height:120vh;background:black;z-index:20000;">
+  <div class="preloader-wrapper big active" style="position:relative;left:45%;top:35%;">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+  </div>
 <article class="container">

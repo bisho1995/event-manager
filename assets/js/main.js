@@ -14,4 +14,5 @@ function redirect(href)
 $(document).ready(function()
 {
 	$(".button-collapse").sideNav();
+	$(".preloader-container").css('display', 'none');
 });
