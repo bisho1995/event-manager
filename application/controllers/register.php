@@ -24,6 +24,7 @@ class Register extends CI_Controller
 		$this->functions->check_if_page_actually_refered_from(base_url().'register');
 		$this->output->set_content_type('application/json');
 		$this->load->library('form_validation');
+		$this->load->database();
 		$this->form_validations();
 	}
 
@@ -52,7 +53,9 @@ class Register extends CI_Controller
 
 	private function proceed_to_add_data_to_database()
 	{
-		echo json_encode(array("1"));
+		$this->db->trans_start();
+		
+		$this->db->trans_complete();
 	}
 }
 ?>
