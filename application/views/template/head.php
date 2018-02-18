@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
       </ul>
     </div>
   </nav>
-  <div class="preloader-container" style="position:fixed;top:0px;left:0px;width:100%;height:120vh;background:black;z-index:20000;">
+  <div class="preloader-container" style="position:fixed;top:0px;left:0px;opacity:0.9;width:100%;height:120vh;background:black;z-index:20000;">
   <div class="preloader-wrapper big active" style="position:relative;left:45%;top:35%;">
     <div class="spinner-layer spinner-blue-only">
       <div class="circle-clipper left">
