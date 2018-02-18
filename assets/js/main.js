@@ -8,11 +8,20 @@ function redirect(href)
 }
 
 
+function displaySpinner()
+{
+	$(".preloader-container").fadeIn();
+}
 
+function hideSpinner()
+{
+	$(".preloader-container").fadeOut();
+}
 
 
 $(document).ready(function()
 {
 	$(".button-collapse").sideNav();
-	$(".preloader-container").css('display', 'none');
+	hideSpinner();
 });
+
