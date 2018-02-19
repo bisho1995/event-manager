@@ -26,8 +26,7 @@ class Login extends CI_Controller {
 
 	public function verify_login()
 	{
-		$this->functions
-				->check_if_page_actually_refered_from(base_url().'login');
+		$this->functions->check_if_page_actually_refered_from(base_url().'login');
 
 		$this->output->set_header('Content-type: application/json');
 
@@ -52,9 +51,45 @@ class Login extends CI_Controller {
 	{
 		$email=$this->input->post('email');
 		$password=$this->input->post('password');
+		$query=$this->db->get_where('teams',array('email'=>$email));
+		if($this->db->affected_rows()===0)
+		{
+			$this->login_error();
+		}
+		else
+		{
+			$query=$this->db->query("SELECT password FROM teams WHERE email='".$email."'");
+			$passwordFromDb=$query->result()[0]->password;
+			if($this->check_if_the_passwords_are_same($password,$passwordFromDb))
+			{
+				$this->login_success();
+			}
+			else
+			{
+				$this->login_error();
+			}
+			
+		}
+	}
+
+	private function login_error()
+	{
+		$ar=array();
+		$ar['error']=array("There was an error logging you in. Please check your credentials agein.");
+		echo json_encode($ar);
+	}
+
+	private function login_success()
+	{
 		$ar=array();
 		$ar['success']=array('url'=>base_url().'admin/');
 		echo json_encode($ar);
+	}
+	
+
+	private function check_if_the_passwords_are_same($pass1,$pass2)
+	{
+		return $pass1===$pass2;
 	}
 
 	private function incompleteOrInvalidInputs()
@@ -65,8 +100,8 @@ class Login extends CI_Controller {
 
 	private function set_login_rules()
 	{
-		$this->form_validation->set_rules('email','Email','trim|required|min_length[5]|max_length[20]|valid_email');
-		$this->form_validation->set_rules('password','Password','required|trim|min_length[6]|max_length[20]');
+		$this->form_validation->set_rules('email','Email','trim|required|min_length[4]|max_length[50]|valid_email');
+		$this->form_validation->set_rules('password','Password','required|trim|min_length[4]|max_length[20]');
 	}//end of set login rules
 
 

@@ -1,7 +1,7 @@
 app.controller('login',function($scope,$http,$window)
 	{
 		$scope.data={};
-		$scope.data.email="test@gmail.com";
+		$scope.data.email="bishoatiem@gmail.com";
 		$scope.data.password="password";
 		$scope.submitForm=function()
 		{
@@ -20,11 +20,11 @@ function gotDataAfterSendingToServer(data)
 {
 	if(data.error)
 	{
-		console.log("errorr");
+		Materialize.toast(data.error,4000);
 	}
 	else
 	{
-		console.log(data.success);
+		console.log(data);
 		redirect(data.success.url);
 	}
 }

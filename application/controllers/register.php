@@ -4,10 +4,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Register extends CI_Controller
 {
 	private $functions;
+	private $errors;
+	private $errorMessagesList;
+	private $successMessageList;
+
 	public function __construct()
 	{
 		parent::__construct();
 		$this->functions=new Functions();
+		$this->errors=array();
+		$this->errorMessagesList=array(
+			'emailError' => 'The email id already exists. Please use another email id.',
+			'transactionError' => 'Sorry there was a problem registering your team.'
+		);
+		$this->successMessageList=array(
+			'registrationSuccess' => 'The team has been registered successfully.'
+		);
 	}
     public function index()
     {
@@ -35,9 +47,13 @@ class Register extends CI_Controller
 		$this->form_validation->set_rules('teamname','Team Name','required|min_length[4]|max_length[20]');
 		$this->form_validation->set_rules('password','Team Name','required|min_length[4]|max_length[20]');
 		$this->form_validation->set_rules('confirm_password','Team Name','required|min_length[4]|max_length[20]|matches[password]');
-		if($this->form_validation->run()== FALSE || $this->my_validation()==false)
+		if($this->form_validation->run()== FALSE)
 		{
 			$this->send_error_status_to_sender(validation_errors('',''));
+		}
+		else if( $this->my_validation()==false)
+		{
+			$this->send_error_status_to_sender($this->errors);
 		}
 		else
 		{
@@ -53,7 +69,10 @@ class Register extends CI_Controller
 				$this->input->post('email')
 			));
 		if($this->db->affected_rows()!=0)
-			return false;
+			{
+				array_push($this->errors,$this->errorMessagesList['emailError']);
+				return false;
+			}
 		else return true;
 	}
 
@@ -74,11 +93,11 @@ class Register extends CI_Controller
 		$this->db->trans_complete();
 		if($this->db->trans_status() == FALSE)
 		{
-			$this->send_error_status_to_sender('Sorry there was some problem with the registration.');
+			$this->send_error_status_to_sender($this->errorMessagesList['transactionError']);
 		}
 		else
 		{
-			$this->send_success_status_to_sender('The team has been registered successfully.');
+			$this->send_success_status_to_sender($this->successMessageList['registrationSuccess']);
 		}
 	}
 	private function add_team_data_to_database()

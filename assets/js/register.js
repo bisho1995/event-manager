@@ -1,4 +1,4 @@
-app.controller('register',function($scope,$window,$http)
+app.controller('register',function($scope)
 {
     $scope.data={
         errors: 0
@@ -10,11 +10,11 @@ app.controller('register',function($scope,$window,$http)
     };
     $scope.data.success="Success";
     $scope.data.error="Error";
-    $scope.data.full_name="Full Name";
-    $scope.data.email="bishoatiem@gmail.com";
-    $scope.data.team_name="Team Name";
-    $scope.data.password="password";
-    $scope.data.confirm_password="password";
+    $scope.data.full_name="";
+    $scope.data.email="";
+    $scope.data.team_name="";
+    $scope.data.password="";
+    $scope.data.confirm_password="";
     $scope.submitForm=function()
     {
         submitTheForm($scope);
@@ -50,8 +50,29 @@ function getDataJsonObject($scope)
 
 function gotDataAfterSendingToServer(data)
 {
-    console.log(data);
     hideSpinner();
+    if(data.error)
+    {
+        registrationFailed(data.error);
+    }
+    if(data.success)
+    {
+        registrationSuccessful();
+    }
+}
+
+function registrationFailed(error)
+{
+    console.log(error.join("<br>"));
+    Materialize.toast(error.join("\n"),4000);
+}
+
+function registrationSuccessful()
+{
+    Materialize.toast('Registration successful, redirecting to login.', 4000);
+        setTimeout(function(){
+            redirect(appData.url+'/login');  
+        },2000);
 }
 
 function itemsValidation($scope)
