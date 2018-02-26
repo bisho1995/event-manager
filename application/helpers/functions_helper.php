@@ -15,18 +15,19 @@ class Functions
 	public function check_if_page_actually_refered_from($url)
 	{
 		$this->CI->load->library('user_agent');
-		$referer=$this->CI->agent->referrer();
-		if($referer == NULL || $referer != $url)
+		$referrer=$this->CI->agent->referrer();
+		if($referrer == NULL || $referrer != $url)
 		{
-			exit("No direct script allowed");
+			exit("No direct script allowed ");
 		}
 	}
+
+	
 
 	public function check_existing_session()
 	{
 		$sessionId=$this->get_session_id();
-		$sessionEmail=$this->get_session_email();
-		if($this->is_valid($sessionId) && $this->is_valid($sessionEmail))
+		if($this->is_valid($sessionId))
 		{
 			return true;
 		}
@@ -60,14 +61,13 @@ class Functions
 						$this->get_session_id_name_text()
 					);
 	}
-	public function get_session_email()
+
+	public function set_session_id($id)
 	{
-		return $this->CI->
-				session->
-					userdata(
-						$this->get_session_email_text()
-					);
+		$this->session->set_userdata($this->get_session_id(), $id);
 	}
+
+	
 	public function is_valid($input)
 	{
 		return (isset($input) && !empty($input));
@@ -76,11 +76,6 @@ class Functions
 	public function get_session_id_name_text()
 	{
 		return 'sessId';
-	}
-
-	public function get_session_email_text()
-	{
-		return 'email';
 	}
 
 }
